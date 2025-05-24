@@ -1,0 +1,11 @@
+# Entorno virtual
+venv/
+
+# Datos locales
+data/
+
+# Configuración sensible
+.env
+
+# Archivos de sistema/macOS
+.DS_Store
