@@ -9,3 +9,6 @@ data/
 
 # Archivos de sistema/macOS
 .DS_Store
+
+__pycache__/
+*.pyc

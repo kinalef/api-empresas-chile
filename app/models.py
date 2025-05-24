@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import Column, Integer, String, Date, BigInteger
 from app.db import Base
+
 
 class Empresa(Base):
     __tablename__ = "empresas"
@@ -16,6 +17,6 @@ class Empresa(Base):
     region_tributaria = Column(String)
     codigo_sociedad = Column(String)
     tipo_actuacion = Column(String)
-    capital = Column(Integer)
+    capital = Column(BigInteger)
     comuna_social = Column(String)
     region_social = Column(String)

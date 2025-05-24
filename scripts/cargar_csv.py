@@ -1,21 +1,15 @@
-import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 import csv
 from sqlalchemy.orm import Session
-from app.models import Empresa
 from app.db import SessionLocal
+from app.models import Empresa
+from app.schemas import EmpresaOut
+from pathlib import Path
 
-CSV_PATH = os.path.join("data", "2013-sociedades-por-fecha-rut-constitucion.csv")
 
-def cargar_empresas():
-    db: Session = SessionLocal()
-
-    with open(CSV_PATH, newline='', encoding='utf-8') as csvfile:
+def cargar_empresas_desde_archivo(filepath, db: Session):
+    with open(filepath, newline='', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=';')
-
-        empresas = []
         for row in reader:
             empresa = Empresa(
                 rut=row['RUT'],
@@ -29,15 +23,28 @@ def cargar_empresas():
                 region_tributaria=row['Region Tributaria'],
                 codigo_sociedad=row['Codigo de sociedad'],
                 tipo_actuacion=row['Tipo de actuacion'],
-                capital=int(row['Capital']) if row['Capital'].isdigit() else 0,
+                capital=int(row['Capital']),
                 comuna_social=row['Comuna Social'],
-                region_social=row['Region Social'],
+                region_social=row['Region Social']
             )
-            empresas.append(empresa)
-
-        db.bulk_save_objects(empresas)
+            db.add(empresa)
         db.commit()
-        print(f"{len(empresas)} empresas cargadas correctamente.")
+        print(f"✔️ {filepath.name} cargado exitosamente.")
+
+def cargar_todos_los_csv():
+    db = SessionLocal()
+    data_dir = Path("data")
+    archivos = sorted(data_dir.glob("*.csv"))
+
+    if not archivos:
+        print("⚠️ No se encontraron archivos CSV en la carpeta data/")
+        return
+
+    for archivo in archivos:
+        print(f"📂 Cargando: {archivo.name}")
+        cargar_empresas_desde_archivo(archivo, db)
+
+    db.close()
 
 if __name__ == "__main__":
-    cargar_empresas()
+    cargar_todos_los_csv()

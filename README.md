@@ -1,3 +1,4 @@
+
 # API Empresas Chile 🇨🇱
 
 API REST construida con **FastAPI** y **PostgreSQL** para exponer información del Registro de Empresas y Sociedades (RES) de Chile.
@@ -11,6 +12,7 @@ API REST construida con **FastAPI** y **PostgreSQL** para exponer información d
   - Listado paginado de empresas
   - Filtros por razón social, comuna y año
   - Detalle de empresa por ID
+  - Estadísticas agregadas por año, comuna y rango de capital
 - Documentación automática vía Swagger
 
 ## 🚀 Cómo ejecutar localmente
@@ -42,11 +44,11 @@ cp .env.example .env
 # Edita los valores con tus credenciales
 ```
 
-5. Crea las tablas y carga datos desde el CSV (opcional):
+5. Crea las tablas y carga datos desde todos los archivos CSV de la carpeta `data/` (opcional):
 
 ```bash
 python create_tables.py
-python scripts/cargar_csv.py
+python -m scripts.cargar_csv
 ```
 
 6. Corre la API:
