@@ -1,3 +1,5 @@
+__pycache__/
+*.pyc
 # Entorno virtual
 venv/
 
@@ -10,5 +12,3 @@ data/
 # Archivos de sistema/macOS
 .DS_Store
 
-__pycache__/
-*.pyc

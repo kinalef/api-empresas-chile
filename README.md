@@ -80,4 +80,13 @@ Abre [http://localhost:8000/docs](http://localhost:8000/docs) para ver la docume
 
 ## 📝 Licencia
 
-Este proyecto es de uso público con fines educativos y de portafolio.
+Este proyecto se encuentra disponible públicamente con fines educativos y de portafolio personal. Puedes explorarlo, aprender y reutilizar ideas libremente.
+
+## 🌐 API en línea
+
+La API está desplegada en Render y disponible públicamente en:
+
+🔗 https://api-empresas-chile.onrender.com
+
+Accede a la documentación Swagger aquí:  
+📘 [https://api-empresas-chile.onrender.com/docs](https://api-empresas-chile.onrender.com/docs)
