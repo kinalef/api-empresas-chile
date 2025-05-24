@@ -15,6 +15,13 @@ API REST construida con **FastAPI** y **PostgreSQL** para exponer información d
   - Estadísticas agregadas por año, comuna y rango de capital
 - Documentación automática vía Swagger
 
+## 🌐 API en línea
+
+Esta API está desplegada en Render y disponible públicamente en:
+
+🔗 https://api-empresas-chile.onrender.com  
+📘 Documentación Swagger: [https://api-empresas-chile.onrender.com/docs](https://api-empresas-chile.onrender.com/docs)
+
 ## 🚀 Cómo ejecutar localmente
 
 1. Clona el repositorio:
@@ -68,6 +75,7 @@ Abre [http://localhost:8000/docs](http://localhost:8000/docs) para ver la docume
 ├── data/              # CSV con datos del RES (no se sube)
 ├── .env.example       # Variables de entorno
 ├── requirements.txt   # Dependencias
+├── LICENSE            # Licencia MIT
 └── README.md          # Esta documentación
 ```
 
@@ -80,13 +88,4 @@ Abre [http://localhost:8000/docs](http://localhost:8000/docs) para ver la docume
 
 ## 📝 Licencia
 
-Este proyecto se encuentra disponible públicamente con fines educativos y de portafolio personal. Puedes explorarlo, aprender y reutilizar ideas libremente.
-
-## 🌐 API en línea
-
-La API está desplegada en Render y disponible públicamente en:
-
-🔗 https://api-empresas-chile.onrender.com
-
-Accede a la documentación Swagger aquí:  
-📘 [https://api-empresas-chile.onrender.com/docs](https://api-empresas-chile.onrender.com/docs)
+Este proyecto está licenciado bajo los términos de la [Licencia MIT](LICENSE).
