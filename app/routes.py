@@ -16,6 +16,16 @@ def get_db():
     finally:
         db.close()
 
+@router.get("/", tags=["Root"])
+def root():
+    return {
+        "mensaje": "API Empresas Chile 🇨🇱",
+        "descripcion": "Esta API entrega acceso a información estructurada del Registro de Empresas y Sociedades (RES) de Chile, incluyendo filtros, estadísticas y exploración por ID.",
+        "documentacion": "https://api-empresas-chile.onrender.com/docs",
+        "github": "https://github.com/tu_usuario/api-empresas-chile",
+        "dataset_original": "https://datos.gob.cl/dataset/registro-de-empresas-y-sociedades"
+    }
+
 @router.get(
     "/empresas",
     response_model=EmpresasPaginatedOut,
