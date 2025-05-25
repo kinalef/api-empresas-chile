@@ -1,5 +1,14 @@
 # API Empresas Chile 🇨🇱
 
+![Deploy to Render](https://img.shields.io/badge/render-live-brightgreen?logo=render&style=flat-square)
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&style=flat-square)
+![FastAPI](https://img.shields.io/badge/FastAPI-🚀-green?style=flat-square)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?logo=postgresql&style=flat-square)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)
+[![UptimeRobot](https://img.shields.io/uptimerobot/status/m789123456-abcdef1234567890abcdef)](https://uptimerobot.com/)
+
+---
+
 API REST construida con **FastAPI** y **PostgreSQL** para exponer información del Registro de Empresas y Sociedades (RES) de Chile.
 
 ## 🔍 ¿Qué hace esta API?
