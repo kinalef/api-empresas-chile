@@ -1,4 +1,3 @@
-
 # API Empresas Chile 🇨🇱
 
 API REST construida con **FastAPI** y **PostgreSQL** para exponer información del Registro de Empresas y Sociedades (RES) de Chile.
@@ -65,6 +64,26 @@ uvicorn app.main:app --reload
 ```
 
 Abre [http://localhost:8000/docs](http://localhost:8000/docs) para ver la documentación Swagger.
+
+## 📊 Ejemplo de uso del endpoint de estadísticas
+
+Puedes consultar estadísticas agregadas de empresas con:
+
+```http
+GET /estadisticas
+```
+
+También puedes filtrar por año específico:
+
+```http
+GET /estadisticas?anio=2015
+```
+
+Esto devolverá un JSON con:
+
+- Empresas creadas ese año (`por_anio`)
+- Empresas por comuna (`por_comuna`)
+- Empresas por rango de capital (`por_rango_capital`)
 
 ## 🗂️ Estructura del proyecto
 

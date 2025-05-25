@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import and_
+from sqlalchemy import and_ , func
 from app.db import SessionLocal
 from app.models import Empresa
 from app.schemas import EmpresaOut, EmpresasPaginatedOut
 from typing import List, Optional
+
 
 router = APIRouter()
 
@@ -78,9 +79,61 @@ def listar_empresas(
         "data": empresas_out
     }
 
-    @router.get("/empresas/{id}", response_model=EmpresaOut, summary="Obtener una empresa por ID")
-    def obtener_empresa_por_id(id: int, db: Session = Depends(get_db)):
-        empresa = db.query(Empresa).filter(Empresa.id == id).first()
-        if not empresa:
-            raise HTTPException(status_code=404, detail="Empresa no encontrada")
-        return empresa
+@router.get(
+    "/estadisticas",
+    summary="Estadísticas globales de empresas",
+    description="""
+Este endpoint entrega estadísticas globales de las empresas registradas, incluyendo:
+
+- Total de empresas por año
+- Total de empresas por comuna tributaria
+- Total de empresas por rangos de capital
+
+Puedes usar el parámetro opcional `anio` para filtrar los resultados por un año específico.
+    """
+)
+def estadisticas_globales(anio: int = Query(None, description="Filtrar estadísticas por año específico"), db: Session = Depends(get_db)):
+    filtros = []
+    if anio:
+        filtros.append(Empresa.anio == anio)
+
+    # Por año (si no se filtra)
+    if anio:
+        empresas_por_anio = {str(anio): db.query(Empresa).filter(*filtros).count()}
+    else:
+        empresas_por_anio = {
+            str(a): t for a, t in db.query(Empresa.anio, func.count(Empresa.id))
+            .group_by(Empresa.anio).order_by(Empresa.anio).all()
+        }
+
+    # Por comuna tributaria
+    query_comuna = db.query(Empresa.comuna_tributaria, func.count(Empresa.id))
+    if filtros:
+        query_comuna = query_comuna.filter(*filtros)
+    empresas_por_comuna = {
+        comuna: total for comuna, total in query_comuna
+        .group_by(Empresa.comuna_tributaria)
+        .order_by(func.count(Empresa.id).desc())
+        .all()
+    }
+
+    # Por rango de capital
+    rangos = {
+        "menos_de_1m": (0, 999_999),
+        "entre_1m_y_10m": (1_000_000, 10_000_000),
+        "mas_de_10m": (10_000_001, None),
+    }
+    resultados_rangos = {}
+    for etiqueta, (minimo, maximo) in rangos.items():
+        query = db.query(func.count(Empresa.id)).filter(Empresa.capital >= minimo)
+        if maximo:
+            query = query.filter(Empresa.capital <= maximo)
+        if filtros:
+            query = query.filter(*filtros)
+        resultados_rangos[etiqueta] = query.scalar()
+
+    return {
+        "por_anio": empresas_por_anio,
+        "por_comuna": empresas_por_comuna,
+        "por_rango_capital": resultados_rangos
+    }
